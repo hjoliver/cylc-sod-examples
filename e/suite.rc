@@ -1,0 +1,11 @@
+# Check inter-cycle triggers work.
+[cylc]
+    UTC mode = True
+[scheduling]
+    initial cycle point = 20150219T00Z
+    final cycle point = 20150220T00Z
+    [[graph]]
+        PT6H = "foo[-PT6H] => foo => waz"
+[runtime]
+   [[root]]
+      script = sleep 5

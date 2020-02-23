@@ -1,0 +1,14 @@
+# qux should be spawned and run
+# baz should be spawned but unsatisfied
+
+[scheduling]
+   [[graph]]
+      R1 = """
+   foo & bar => baz
+   foo:fail => qux
+           """
+[runtime]
+   [[root]]
+      script = sleep 10
+   [[foo]]
+      script = false

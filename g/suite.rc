@@ -1,0 +1,15 @@
+# Check inter-cycle trigger edge case.
+# foo should run once in first cycle and spawn bar in second cycle.
+# Then bar should trigger baz in subsequent cycles.
+[cylc]
+   cycle point format = %Y
+[scheduling]
+    initial cycle point = 2000
+    final cycle point = 2020
+    [[graph]]
+        R1 = "foo"
+        R1/^+P1Y = "foo[-P1Y] => bar"
+        R/^+P1Y/P1Y = "bar => baz"
+[runtime]
+   [[root]]
+      script = sleep 5

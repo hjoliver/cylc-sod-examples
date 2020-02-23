@@ -1,0 +1,17 @@
+# Check OR triggers work if some members were never spawned.
+[scheduling]
+   [[graph]]
+      R1 = """
+         foo => bar => f1 & f2
+         foo => baz => f3 & f4
+         FAM:succeed-any => qux
+           """
+[runtime]
+   [[root]]
+      pre-script = sleep 5
+   [[bar]]
+      script = false
+   [[FAM]]
+   [[f1, f2, f3, f4]]
+      inherit = FAM
+

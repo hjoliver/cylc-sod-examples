@@ -1,0 +1,13 @@
+# Check for auto-reflow on conditional triggers.
+#   baz should run after foo but not again after bar
+
+[scheduling]
+   [[graph]]
+      R1 = "foo | bar => baz"
+[runtime]
+   [[foo]]
+      script = sleep 5
+   [[bar]]
+      script = sleep 25
+   [[qux]]
+      script = sleep 5

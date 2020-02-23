@@ -1,0 +1,20 @@
+# Branching without suicide triggers.
+# Test both branches, in different cycle points.
+[scheduling]
+   cycling mode = integer
+   initial cycle point = 1
+   final cycle point = 2
+   [[graph]]
+       P1 = """
+          model:fail => recover1 => recover2 => recover3
+          model => post1 => post2 => post3
+          post3 | recover3 => finish
+            """
+[runtime]
+  [[root]]
+     script = sleep 10
+  [[model]]
+     script = """
+         if (( CYLC_TASK_CYCLE_POINT == 1 )); then
+            false
+         fi   """
