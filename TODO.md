@@ -44,3 +44,8 @@ to check that a task didn't run already?
 Can we just move job logs out of the way instead?
 
 Note that SoS submit num goes back to 1 if the task had to be inserted!!!
+
+----
+
+`cylc/flow/tests/(network/, test_data_store.py)` uses `insert_tasks()` (removed)
+
