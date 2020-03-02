@@ -49,3 +49,7 @@ Note that SoS submit num goes back to 1 if the task had to be inserted!!!
 
 `cylc/flow/tests/(network/, test_data_store.py)` uses `insert_tasks()` (removed)
 
+----
+
+restart : need to address individual prereqs of loaded tasks, not base entirely
+on state.

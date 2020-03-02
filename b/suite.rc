@@ -1,5 +1,5 @@
 # qux should be spawned and run
-# baz should be spawned but unsatisfied
+# baz should be spawned but stuck waiting
 
 [scheduling]
    [[graph]]

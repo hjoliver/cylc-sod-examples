@@ -1,13 +1,15 @@
-# Check for auto-reflow on conditional triggers.
-#   baz should run after foo but not again after bar
+# Check conditional-reflow prevention.
+#   baz should stay in the pool until both foo and bar have finished.
 
 [scheduling]
    [[graph]]
-      R1 = "foo | bar => baz"
+      R1 = "foo | bar => baz => boof"
 [runtime]
    [[foo]]
-      script = sleep 5
+      script = sleep 1
    [[bar]]
-      script = sleep 25
-   [[qux]]
+      script = sleep 15
+   [[baz]]
       script = sleep 5
+   [[boof]]
+      script = sleep 25

@@ -1,10 +1,13 @@
 # Check OR triggers work if some members were never spawned.
+#  qux should run even though f1 and f2 are not spawned.
+#  but it should stay in the pool as succeeded because not all of its parents
+#  are finished (they might run later and cause reflow)
 [scheduling]
    [[graph]]
       R1 = """
-         foo => bar => f1 & f2
-         foo => baz => f3 & f4
-         FAM:succeed-any => qux
+         bar => f1 & f2
+         baz => f3 & f4
+         FAM:succeed-any => qux => cheese & weese
            """
 [runtime]
    [[root]]
@@ -14,4 +17,8 @@
    [[FAM]]
    [[f1, f2, f3, f4]]
       inherit = FAM
+   [[cheese]]
+      script = sleep 2
+   [[weese]]
+      script = sleep 5
 
