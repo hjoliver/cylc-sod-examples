@@ -1,5 +1,8 @@
-# qux should be spawned and run
-# baz should be spawned but stuck waiting
+# Check that "stuck" waiting tasks are removed if both parents finished.
+# qux spawned and run on foo:fail
+# baz spawned waiting, on bar:succeed
+# baz spawned early on foo:fail (to remember that foo finished)
+# baz waiting removed when bar finishes (both parents finished).
 
 [scheduling]
    [[graph]]
