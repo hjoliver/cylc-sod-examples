@@ -1,7 +1,7 @@
 # Check OR triggers work if some members were never spawned.
 #  qux should run even though f1 and f2 are not spawned.
-#  but it should stay in the pool as succeeded because not all of its parents
-#  are finished (they might run later and cause reflow)
+#    but it stay as succeeded because some parents didn't finish
+#  (otherwise they might run later and cause reflow)
 [scheduling]
    [[graph]]
       R1 = """

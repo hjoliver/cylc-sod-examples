@@ -1,5 +1,6 @@
 # Check inter-cycle trigger edge case.
 # bar needs to auto-spawn but only after the first cycle point.
+
 # (TODO 2nd-cycle bar should be able to go immediately, not wait for the first
 # to be released from the runahead pool).
 [cylc]
@@ -9,7 +10,7 @@
     final cycle point = 2024
     [[graph]]
         R1 = "foo[-P1Y] => foo => bar"
-        P1Y = "bar"  # starts at ICP!
+        P1Y = "bar => baz"  # starts at ICP!
 [runtime]
    [[root]]
       script = sleep 10

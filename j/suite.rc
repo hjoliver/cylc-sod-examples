@@ -1,14 +1,15 @@
-# Task "stuck" should be stuck as waiting but not hold back the workflow.
+# Task "stuck" should be stuck as waiting until slow.1 finishes
 # Task "slow" runs slowly so it should determine the runahead for "fast".
 
 [scheduling]
     cycling mode = integer
     initial cycle point = 1
+    final cycle point = 10
     max active cycle points = 5
     [[graph]]
         R1 = """
           foo:fail => alert
-          foo & fast => stuck
+          foo & slow => stuck
              """
         P1 = """
           fast[-P1] => fast & slow
@@ -19,5 +20,7 @@
       script = sleep 1
    [[foo]]
       script = false
-   [[coffee]]
+   [[fast]]
+      script = sleep 2
+   [[slow]]
       script = sleep 10

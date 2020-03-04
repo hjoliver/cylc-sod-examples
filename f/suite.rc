@@ -1,13 +1,13 @@
 # Check inter-cycle trigger edge case.
 # foo should run once in first cycle and spawn bar in second cycle.
-# The workflow should stall when bar finishes.
+# The workflow should stall once bar.2 finishes.
 [scheduling]
     cycling mode = integer
     initial cycle point = 1
-    final cycle point = 10
+    final cycle point = 5
     [[graph]]
         R1 = "foo"
-        P1 = "foo[-P1] => bar"
+        R/2/P1 = "foo[-P1] => bar"
 [runtime]
    [[root]]
       script = sleep 5

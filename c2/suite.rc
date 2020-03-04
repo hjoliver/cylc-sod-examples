@@ -8,11 +8,11 @@
    final cycle point = 2
    [[graph]]
        P1 = """
-          model:fail => recover1 => recover2 => recover3
-          model => post1 => post2 => post3
-          post3 | recover3 => finish
-          model => !recover1 & !recover2 & !recover3
-          model:fail => !post1 & !post2 & !post3
+          model:fail => recover
+          model => post
+          post | recover => finish
+          model => !recover
+          model:fail => !post
             """
 [runtime]
   [[root]]
