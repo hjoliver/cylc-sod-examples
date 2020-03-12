@@ -1,0 +1,19 @@
+# A failed leaf node, not handled, should be retained for retriggering.
+
+[scheduling]
+   cycling mode = integer
+   initial cycle point = 1
+   final cycle point = 5
+   [[graph]]
+       P1 = """
+          foo => bar => baz
+          """
+[runtime]
+   [[root]]
+       script = sleep $(( 5 + RANDOM % 5 ))
+   [[baz]]
+       script = """
+   if (( CYLC_TASK_CYCLE_POINT == 1 && CYLC_TASK_SUBMIT_NUMBER == 1 )); then
+      false
+   fi
+   """
