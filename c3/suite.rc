@@ -1,0 +1,18 @@
+# failed foo.1 and its waiting child baz.1 should stay in the pool
+# because foo:failed is not handled.
+
+[scheduling]
+   cycling mode = integer
+   initial cycle point = 1
+   final cycle point = 5
+   [[graph]]
+       P1 = "foo & bar => baz"
+[runtime]
+   [[root]]
+       script = sleep $(( 5 + RANDOM % 5 ))
+   [[foo]]
+       script = """
+   if (( CYLC_TASK_CYCLE_POINT == 1 && CYLC_TASK_SUBMIT_NUMBER == 1 )); then
+      false
+   fi
+   """
