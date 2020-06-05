@@ -1,0 +1,11 @@
+# Disconnected even and odd graphs.
+# foo.1 and foo.2 must be auto-spawned.
+[scheduling]
+   cycling mode = integer
+   initial cycle point = 1
+   final cycle point = 4
+   [[graph]]
+        P1 = foo[-P2] => foo => bar
+[runtime]
+   [[root]]
+       script = sleep 10

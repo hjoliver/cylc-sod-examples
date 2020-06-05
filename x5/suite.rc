@@ -1,19 +1,22 @@
+# Fail is handled but does not continue the workflow toward
+# completion.
+
+# Can we say, if foo:fail is handled, the handlers must continue the
+# workflow toward completion, else assume the new end point is new
+# completion point? (shut down on empty pool?)
+
+# Or if not, stay alive with last thing to happen in the pool (and
+# window)??
+
 [scheduling]
    cycling mode = integer
    initial cycle point = 1
    final cycle point = 5
    [[graph]]
        P1 = """
-          # Fail is handled but does not continue the workflow toward
-          # completion!
           foo[-P1] => foo
           foo => bar => baz
           foo:fail => notify => alert
-          # Can we say, if foo:fail is handled, the handlers must continue the
-          # workflow toward completion, else assume the new end point is new
-          # completion point? (shut down on empty pool?)
-          # Or if not, stay alive with last thing to happen in the pool (and
-          # window)??
           """
 [runtime]
    [[root]]

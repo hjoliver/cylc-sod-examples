@@ -1,0 +1,49 @@
+
+# a:out2 => bar is never spawned
+
+# foo and baz succeed:
+#   good: qux runs even though all parents are not finished
+
+# foo succeeds, baz fails unhandled
+#   good: qux stuck waiting, fixing and retriggering bar works
+
+# foo succeeds, baz fails handled
+#   stalls with qux waiting, parents not all finished
+#
+#  Should we say, if "A & baz => qux" where A is "(foo|bar)" remove
+#  waiting qux if baz is finished and (foo|bar) is finished?
+#    NO:
+#  1) what does "foo|bar is finished" mean?
+#  2) we don't know if bar will come along and succeed later, which will let
+#  qux run.
+#
+# BUT if the suite has stalled we know bar will not come along later short of
+# intervention. Stalled means: not held, waiting tasks but no active tasks.
+# (With cycling waz added, stalls with qux.1 waiting, waz.4 runahead).
+# We could decide to arbitrarily remove stuck waiting tasks to allow the suite
+# to either shut down or continue. Or allow the stall to highlight a suite
+# design issue that requires suicide triggers to fix (as it does in SoS!).
+# (Add baz:fail => !qux)
+
+[scheduling]
+   cycling mode = integer
+   initial cycle point = 1
+   [[graph]]
+       R1 = """
+       a:out1 => foo
+       a:out2 => bar
+       (foo | bar) & baz => qux
+       baz:fail => oops
+       baz:fail => !qux
+       """
+       P1 = waz
+[runtime]
+   [[root]]
+       script = sleep 5
+    [[a]]
+       script = "cylc message out1"
+       [[[outputs]]]
+           out1 = out1
+           out2 = out2
+    [[baz]]
+       script = false
